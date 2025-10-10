@@ -49,6 +49,6 @@ jobs:
 
       - name: Build & Push backend image
         run: |
-          IMAGE_NAME=${{ env.REGISTRY }}/${{ env.REPO_NAME }}/backend:${{ env.IMAGE_TAG }}
+          IMAGE_NAME=${{ env.REGISTRY }}/${{ env.REPO_NAME }}/backend:${{ env.IMAGE_VERSION }}
           docker build -t $IMAGE_NAME ./backend
           docker push $IMAGE_NAME
