@@ -49,6 +49,6 @@ jobs:
 
       - name: Build & Push frontend image
         run: |
-          IMAGE_NAME=${{ env.REGISTRY }}/${{ env.REPO_NAME }}/frontend:${{ env.IMAGE_TAG }}
+          IMAGE_NAME=${{ env.REGISTRY }}/${{ env.REPO_NAME }}/frontend:${{ env.IMAGE_VERSION }}
           docker build -t $IMAGE_NAME ./frontend
           docker push $IMAGE_NAME
