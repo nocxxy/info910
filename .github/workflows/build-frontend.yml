@@ -39,7 +39,7 @@ jobs:
           username: nocxxy
           password: ${{ secrets.GHCR_TOKEN }}
 
-      - name: Build backend image
+      - name: Build & Push frontend image
         run: |
           IMAGE_NAME=ghcr.io/${{ github.repository }}/frontend:${{ steps.get_version.outputs.version }}
           docker build -t $IMAGE_NAME ./frontend
