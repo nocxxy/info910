@@ -32,6 +32,13 @@ jobs:
           VERSION=$(jq -r .version backend/package.json)
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
+      - name: Log in with PAT
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: nocxxy
+          password: ${{ secrets.GHCR_TOKEN }}
+
       - name: Build backend image
         run: |
           IMAGE_NAME=ghcr.io/${{ github.repository }}/backend:${{ steps.get_version.outputs.version }}
