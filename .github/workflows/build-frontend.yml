@@ -59,4 +59,4 @@ jobs:
           tags: |
             ${{ env.REGISTRY }}/${{ env.REPO_NAME }}/frontend:$IMAGE_VERSION
             ${{ env.REGISTRY }}/${{ env.REPO_NAME }}/frontend:latest
-          labels: ${{ steps.meta.outputs.labels
+          labels: ${{ steps.meta.outputs.labels }}
