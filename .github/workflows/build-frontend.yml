@@ -35,8 +35,8 @@ jobs:
         uses: docker/setup-buildx-action@v2
 
       - name: Extract version from package.json
-        run: |
-          echo "IMAGE_VERSION=$(jq -r .version frontend/package.json)" >> $GITHUB_ENV
+        id: get_version
+        run: echo "version=$(jq -r .version backend/package.json)" >> $GITHUB_OUTPUT
 
       - name: Log in to GHCR
         uses: docker/login-action@v2
@@ -57,6 +57,6 @@ jobs:
           context: ./frontend
           push: true
           tags: |
-            ${{ env.REGISTRY }}/${{ env.REPO_NAME }}/frontend:$IMAGE_VERSION
+            ${{ env.REGISTRY }}/${{ env.REPO_NAME }}/frontend:${{ steps.get_version.outputs.version }}
             ${{ env.REGISTRY }}/${{ env.REPO_NAME }}/frontend:latest
           labels: ${{ steps.meta.outputs.labels }}
