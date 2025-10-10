@@ -1,4 +1,4 @@
-name: Build Frontend Image
+name: Build frontend Image
 
 on:
   push:
@@ -36,7 +36,7 @@ jobs:
 
       - name: Extract version from package.json
         id: get_version
-        run: echo "version=$(jq -r .version backend/package.json)" >> $GITHUB_OUTPUT
+        run: echo "version=$(jq -r .version frontend/package.json)" >> $GITHUB_OUTPUT
 
       - name: Log in to GHCR
         uses: docker/login-action@v2
@@ -49,14 +49,15 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: ${{ env.REGISTRY }}/${{ env.REPO_NAME }}/frontend
+          images: ${{ env.REGISTRY }}/${{ env.REPO_NAME }}
+          tags: |
+            type=raw,value=frontend-${{ steps.get_version.outputs.version }}
+            type=raw,value=frontend-latest
 
       - name: Build & Push frontend image
         uses: docker/build-push-action@v5
         with:
           context: ./frontend
           push: true
-          tags: |
-            ${{ env.REGISTRY }}/${{ env.REPO_NAME }}/frontend:${{ steps.get_version.outputs.version }}
-            ${{ env.REGISTRY }}/${{ env.REPO_NAME }}/frontend:latest
+          tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
