@@ -44,7 +44,7 @@ jobs:
         uses: docker/login-action@v2
         with:
           registry: ${{ env.REGISTRY }}
-          username: nocxxy
+          username: ${{ github.actor }}
           password: ${{ secrets.GHCR_TOKEN }}
 
       - name: Build & Push backend image
