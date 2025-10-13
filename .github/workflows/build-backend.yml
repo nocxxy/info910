@@ -4,16 +4,12 @@ on:
   push:
     branches:
       - master
-      - feat/build-pipelines
     paths:
-      - '.github/workflows/**'
       - 'backend/**'
   pull_request:
     branches:
       - master
-      - feat/build-pipelines
     paths:
-      - '.github/workflows/**'
       - 'backend/**'
 
 env:
