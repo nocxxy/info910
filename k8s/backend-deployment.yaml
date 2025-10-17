@@ -2,22 +2,24 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: backend
-  labels:
-    app: backend
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
-      app: backend
+      app: clicker
+      tier: backend
+      track: stable
   template:
     metadata:
       labels:
-        app: backend
+        app: clicker
+        tier: backend
+        track: stable
     spec:
       containers:
         - name: backend
-          image: backend:latest
-          imagePullPolicy: Never # IMPORTANT : Ajouter cette ligne
+          image: ghcr.io/nocxxy/info910:backend-latest
+          imagePullPolicy: Always # IMPORTANT : Ajouter cette ligne
           ports:
             - containerPort: 5000
           env:
@@ -25,16 +27,3 @@ spec:
               value: "mongodb://mongodb:27017/clickdb"
             - name: PORT
               value: "5000"
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: backend
-spec:
-  selector:
-    app: backend
-  ports:
-    - protocol: TCP
-      port: 5000
-      targetPort: 5000
-  type: ClusterIP
