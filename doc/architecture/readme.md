@@ -7,3 +7,16 @@ L'architecture de ce projet suis le même modèle de déploiement :
 - Un déploiement qui utilise cette image pour ensuite construire les ressources k8s nécessaires 
 
 ![](./resource/architecture.png)
+
+## Images
+
+- backend
+```bash
+docker pull ghcr.io/nocxxy/info910:backend-latest
+```
+
+- frontend : 
+```bash
+docker pull ghcr.io/nocxxy/info910:frontend-latest
+```
+
