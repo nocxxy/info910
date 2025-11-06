@@ -15,6 +15,7 @@ spec:
       containers:
         - name: backend
           image: ghcr.io/nocxxy/info910:backend-latest-dev
+          imagePullPolicy: Always
           ports:
             - containerPort: 5000
           env:

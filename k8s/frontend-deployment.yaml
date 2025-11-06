@@ -15,5 +15,6 @@ spec:
       containers:
         - name: frontend
           image: ghcr.io/nocxxy/info910:frontend-latest-dev
+          imagePullPolicy: Always
           ports:
             - containerPort: 80

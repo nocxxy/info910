@@ -27,6 +27,27 @@ const counterSchema = new mongoose.Schema({
 
 const Counter = mongoose.model("Counter", counterSchema);
 
+// Middleware de logging
+app.use((req, res, next) => {
+  const timestamp = new Date().toISOString();
+  const ip = req.ip || req.connection.remoteAddress;
+  const method = req.method;
+  const url = req.originalUrl;
+
+  const start = Date.now();
+
+  res.on("finish", () => {
+    const duration = Date.now() - start;
+    const status = res.statusCode;
+
+    console.log(
+      `[${timestamp}] ${ip} ${method} ${url} ${status} ${duration}ms`
+    );
+  });
+
+  next();
+});
+
 // Routes API
 app.get("/api/health", (req, res) => {
   res.json({ status: "ok", message: "Backend is running" });
@@ -61,7 +82,7 @@ app.post("/api/counter", async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`🚀 Backend démarré sur le port ${PORT}`);
 });
