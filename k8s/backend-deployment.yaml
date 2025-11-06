@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: backend-local:latest
+          image: ghcr.io/nocxxy/info910:backend-latest
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
