@@ -37,11 +37,19 @@ minikube start
 ```
 
 ```bash
+minikube addons enable ingress
+```
+
+```bash
 kubectl create -f k8s
 ```
 
-## Start
 ```bash
-
+minikube tunnel
 ```
+
+## Accès
+
+http://localhost
+
 

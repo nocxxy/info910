@@ -28,7 +28,7 @@ function App() {
   const incrementCounter = async () => {
     setLoading(true);
     try {
-      const response = await axios.post(`${API_URL}/api/counter/increment`);
+      const response = await axios.post(`${API_URL}/api/counter`);
       setCount(response.data.count);
       setError(null);
     } catch (err) {
