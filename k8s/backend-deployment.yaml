@@ -2,39 +2,28 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: backend
-  labels:
-    app: backend
 spec:
-  replicas: 2
   selector:
     matchLabels:
-      app: backend
+      app: clicker
+      tier: backend
+      track: stable
   template:
     metadata:
       labels:
-        app: backend
+        app: clicker
+        tier: backend
+        track: stable
     spec:
       containers:
         - name: backend
-          image: backend:latest
-          imagePullPolicy: Never # IMPORTANT : Ajouter cette ligne
+          image: backend-local:latest
+          imagePullPolicy: IfNotPresent
           ports:
-            - containerPort: 5000
+            - name: http
+              containerPort: 3000
           env:
             - name: MONGO_URL
-              value: "mongodb://mongodb:27017/clickdb"
+              value: "mongodb://admin:password@mongodb:27017/clickdb?authSource=admin"
             - name: PORT
-              value: "5000"
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: backend
-spec:
-  selector:
-    app: backend
-  ports:
-    - protocol: TCP
-      port: 5000
-      targetPort: 5000
-  type: ClusterIP
+              value: "3000"

@@ -7,13 +7,17 @@ app.use(cors());
 app.use(express.json());
 
 // Connexion MongoDB
-const MONGO_URL = process.env.MONGO_URL || "mongodb://mongodb:27017/clickdb";
+const MONGO_URL =
+  process.env.MONGO_URL ||
+  "mongodb://admin:password@mongodb:27017/clickdb?authSource=admin";
+
+console.log(
+  "🔗 Tentative de connexion à:",
+  MONGO_URL.replace(/:[^:@]+@/, ":****@")
+); // Masque le mot de passe dans les logs
 
 mongoose
-  .connect(MONGO_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(MONGO_URL)
   .then(() => console.log("✅ MongoDB connecté"))
   .catch((err) => console.error("❌ Erreur MongoDB:", err));
 

@@ -2,34 +2,27 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: frontend
-  labels:
-    app: frontend
 spec:
-  replicas: 2
   selector:
     matchLabels:
-      app: frontend
+      app: clicker
+      tier: frontend
+      track: stable
   template:
     metadata:
       labels:
-        app: frontend
+        app: clicker
+        tier: frontend
+        track: stable
     spec:
       containers:
-        - name: frontend
-          image: frontend:latest
-          imagePullPolicy: Never # IMPORTANT : Ajouter cette ligne
+        - name: nginx
+          image: frontend-local:latest
+          imagePullPolicy: IfNotPresent
           ports:
-            - containerPort: 80
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: frontend
-spec:
-  selector:
-    app: frontend
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 80
-  type: NodePort
+            - name: http
+              containerPort: 80
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/usr/sbin/nginx", "-s", "quit"]
