@@ -10,6 +10,7 @@ on:
   pull_request:
     branches:
       - master
+      - dev
     paths:
       - 'backend/**'
 
@@ -48,8 +49,8 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.REPO_NAME }}
           tags: |
-            type=raw,value=backend-${{ steps.get_version.outputs.version }}
-            type=raw,value=backend-latest
+            type=raw,value=backend-${{ steps.get_version.outputs.version }}-dev
+            type=raw,value=backend-latest-dev
 
       - name: Build & Push backend image
         uses: docker/build-push-action@v5
