@@ -24,6 +24,7 @@
 ## Prérequis
 - minikube
 - kubectl
+- docker
 
 ## Clone
 ```bash
@@ -31,6 +32,10 @@ git clone https://github.com/nocxxy/info910.git
 ```
 
 ## Setup
+```bash
+minikube start
+```
+
 ```bash
 kubectl create -f k8s
 ```

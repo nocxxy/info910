@@ -7,9 +7,7 @@ app.use(cors());
 app.use(express.json());
 
 // Connexion MongoDB
-const MONGO_URL =
-  process.env.MONGO_URL ||
-  "mongodb://admin:password@mongodb:27017/clickdb?authSource=admin";
+const MONGO_URL = process.env.MONGO_URL;
 
 console.log(
   "🔗 Tentative de connexion à:",
@@ -48,7 +46,7 @@ app.get("/api/counter", async (req, res) => {
 });
 
 // Incrémenter le compteur
-app.post("/api/counter/increment", async (req, res) => {
+app.post("/api/counter", async (req, res) => {
   try {
     let counter = await Counter.findOne({ name: "main" });
     if (!counter) {
@@ -63,7 +61,7 @@ app.post("/api/counter/increment", async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log(`🚀 Backend démarré sur le port ${PORT}`);
 });
