@@ -3,7 +3,6 @@ kind: Deployment
 metadata:
   name: backend
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: clicker
@@ -18,12 +17,13 @@ spec:
     spec:
       containers:
         - name: backend
-          image: ghcr.io/nocxxy/info910:backend-latest
-          imagePullPolicy: Always # IMPORTANT : Ajouter cette ligne
+          image: backend-local:latest
+          imagePullPolicy: IfNotPresent
           ports:
-            - containerPort: 5000
+            - name: http
+              containerPort: 3000
           env:
             - name: MONGO_URL
-              value: "mongodb://mongodb:27017/clickdb"
+              value: "mongodb://admin:password@mongodb:27017/clickdb?authSource=admin"
             - name: PORT
-              value: "5000"
+              value: "3000"

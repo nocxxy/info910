@@ -3,7 +3,6 @@ kind: Deployment
 metadata:
   name: frontend
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: clicker
@@ -17,8 +16,13 @@ spec:
         track: stable
     spec:
       containers:
-        - name: frontend
-          image: ghcr.io/nocxxy/info910:frontend-latest
-          imagePullPolicy: Always # IMPORTANT : Ajouter cette ligne
+        - name: nginx
+          image: frontend-local:latest
+          imagePullPolicy: IfNotPresent
           ports:
-            - containerPort: 80
+            - name: http
+              containerPort: 80
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/usr/sbin/nginx", "-s", "quit"]
