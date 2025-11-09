@@ -7,7 +7,13 @@ app.use(cors());
 app.use(express.json());
 
 // Connexion MongoDB
-const MONGO_URL = process.env.MONGO_URL;
+const MONGO_USER = process.env.MONGO_USER;
+const MONGO_PASSWORD = process.env.MONGO_PASSWORD;
+const MONGO_HOST = process.env.MONGO_HOST || 'mongodb-service';
+const MONGO_PORT = process.env.MONGO_PORT || '27017';
+
+const MONGO_URL = `mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_HOST}:${MONGO_PORT}`;
+
 
 console.log(
   "🔗 Tentative de connexion à:",
