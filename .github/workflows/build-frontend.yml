@@ -4,14 +4,12 @@ on:
   push:
     branches:
       - master
-      - dev
     paths:
       - 'frontend/**'
       - '.github/workflows/**'
   pull_request:
     branches:
       - master
-      - dev
     paths:
       - 'frontend/**'
       - '.github/workflows/**'
@@ -51,8 +49,8 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.REPO_NAME }}
           tags: |
-            type=raw,value=frontend-${{ steps.get_version.outputs.version }}-dev
-            type=raw,value=frontend-latest-dev
+            type=raw,value=frontend-${{ steps.get_version.outputs.version }}
+            type=raw,value=frontend-latest
 
       - name: Build & Push frontend image
         uses: docker/build-push-action@v5
