@@ -17,13 +17,13 @@
 - 📂 `k8s` : Les fichiers de déploiement du projet
 - 📄 `.gitignore`
 - 📄 `README.md`
-- 📄 `TODO.md` : Liste des tâches à faire du projet
 
 # Installation 
 
 ## Prérequis
 - minikube
 - kubectl
+- docker
 
 ## Clone
 ```bash
@@ -32,11 +32,73 @@ git clone https://github.com/nocxxy/info910.git
 
 ## Setup
 ```bash
+minikube start
+```
+
+```bash
+minikube addons enable ingress
+```
+
+```bash
 kubectl create -f k8s
 ```
 
-## Start
 ```bash
-
+minikube tunnel
 ```
+
+## Accès
+
+### Frontend
+http://localhost
+
+### API (backend)
+
+**URL de base**  
+`http://localhost/api`
+
+---
+
+## Health Check
+
+**GET** `/api/health`  
+Vérifie que le backend est opérationnel.
+
+**Response**
+```
+{
+  "status": "ok",
+  "message": "Backend is running"
+}
+```
+
+---
+
+## Get Counter
+
+**GET** `/api/counter`  
+Récupère la valeur actuelle du compteur. Si aucun compteur n’existe, il est initialisé à 0.
+
+**Response**
+```
+{
+  "count": 42
+}
+```
+
+---
+
+## Increment Counter
+
+**POST** `/api/counter`  
+Incrémente la valeur du compteur. Si aucun compteur n’existe, il est créé avec une valeur de 1.
+
+**Response**
+```
+{
+  "count": 43
+}
+```
+
+
 

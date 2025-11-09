@@ -1,14 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: frontend
+  name: frontend-service
 spec:
+  type: ClusterIP
   selector:
-    app: clicker
-    tier: frontend
-    track: stable
+    app: frontend
   ports:
     - protocol: TCP
       port: 80
       targetPort: 80
-  type: LoadBalancer

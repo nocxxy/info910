@@ -7,9 +7,13 @@ app.use(cors());
 app.use(express.json());
 
 // Connexion MongoDB
-const MONGO_URL =
-  process.env.MONGO_URL ||
-  "mongodb://admin:password@mongodb:27017/clickdb?authSource=admin";
+const MONGO_USER = process.env.MONGO_USER;
+const MONGO_PASSWORD = process.env.MONGO_PASSWORD;
+const MONGO_HOST = process.env.MONGO_HOST || 'mongodb-service';
+const MONGO_PORT = process.env.MONGO_PORT || '27017';
+
+const MONGO_URL = `mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_HOST}:${MONGO_PORT}`;
+
 
 console.log(
   "🔗 Tentative de connexion à:",
@@ -28,6 +32,27 @@ const counterSchema = new mongoose.Schema({
 });
 
 const Counter = mongoose.model("Counter", counterSchema);
+
+// Middleware de logging
+app.use((req, res, next) => {
+  const timestamp = new Date().toISOString();
+  const ip = req.ip || req.connection.remoteAddress;
+  const method = req.method;
+  const url = req.originalUrl;
+
+  const start = Date.now();
+
+  res.on("finish", () => {
+    const duration = Date.now() - start;
+    const status = res.statusCode;
+
+    console.log(
+      `[${timestamp}] ${ip} ${method} ${url} ${status} ${duration}ms`
+    );
+  });
+
+  next();
+});
 
 // Routes API
 app.get("/api/health", (req, res) => {
@@ -48,7 +73,7 @@ app.get("/api/counter", async (req, res) => {
 });
 
 // Incrémenter le compteur
-app.post("/api/counter/increment", async (req, res) => {
+app.post("/api/counter", async (req, res) => {
   try {
     let counter = await Counter.findOne({ name: "main" });
     if (!counter) {

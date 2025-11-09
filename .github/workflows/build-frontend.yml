@@ -6,11 +6,13 @@ on:
       - master
     paths:
       - 'frontend/**'
+      - '.github/workflows/**'
   pull_request:
     branches:
       - master
     paths:
       - 'frontend/**'
+      - '.github/workflows/**'
 
 env:
   REGISTRY: ghcr.io

@@ -1,28 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frontend
+  name: frontend-deployment
 spec:
+  replicas: 1
   selector:
     matchLabels:
-      app: clicker
-      tier: frontend
-      track: stable
+      app: frontend
   template:
     metadata:
       labels:
-        app: clicker
-        tier: frontend
-        track: stable
+        app: frontend
     spec:
       containers:
-        - name: nginx
-          image: ghcr.io/nocxxy/info910:frontend-latest
-          imagePullPolicy: IfNotPresent
+        - name: frontend
+          image: ghcr.io/nocxxy/info910:frontend-latest-dev
+          imagePullPolicy: Always
           ports:
-            - name: http
-              containerPort: 80
-          lifecycle:
-            preStop:
-              exec:
-                command: ["/usr/sbin/nginx", "-s", "quit"]
+            - containerPort: 80

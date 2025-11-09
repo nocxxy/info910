@@ -1,37 +1,37 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: backend-deployment
+  name: mongodb-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: backend
+      app: mongodb
   template:
     metadata:
       labels:
-        app: backend
+        app: mongodb
     spec:
       containers:
-        - name: backend
-          image: ghcr.io/nocxxy/info910:backend-latest-dev
-          imagePullPolicy: Always
+        - name: mongodb
+          image: mongo:7.0
           ports:
-            - containerPort: 5000
+            - containerPort: 27017
           env:
-            - name: PORT
-              value: "5000"
-            - name: MONGO_USER
+            - name: MONGO_INITDB_ROOT_USERNAME
               valueFrom:
                 secretKeyRef:
                   name: mongodb-secret
                   key: mongodb-user
-            - name: MONGO_PASSWORD
+            - name: MONGO_INITDB_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: mongodb-secret
                   key: mongodb-password
-            - name: MONGO_HOST
-              value: "mongodb-service"
-            - name: MONGO_PORT
-              value: "27017"
+          volumeMounts:
+            - name: mongodb-storage
+              mountPath: /data/db
+      volumes:
+        - name: mongodb-storage
+          persistentVolumeClaim:
+            claimName: mongodb-pvc
