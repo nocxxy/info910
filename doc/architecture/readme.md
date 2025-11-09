@@ -12,11 +12,11 @@ L'architecture de ce projet suis le même modèle de déploiement :
 
 - backend
 ```bash
-docker pull ghcr.io/nocxxy/info910:backend-latest
+ghcr.io/nocxxy/info910:backend-latest
 ```
 
 - frontend : 
 ```bash
-docker pull ghcr.io/nocxxy/info910:frontend-latest
+ghcr.io/nocxxy/info910:frontend-latest
 ```
 
