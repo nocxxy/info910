@@ -5,6 +5,16 @@
 
 # Objectif du projet
 
+Ce projet a pour but de déployer une application simple en utilisation des mécanismes de **DevOps** à travers **Kubernetes**.
+
+L'application se base sur :
+- Un frontend
+- Un backend
+- Une base de données
+- Un secret Kubernetes pour les identifiants
+- Un volume persistant pour les données
+- Un ingress pour le routage
+
 
 # Ressources du projet
 - 📂 `.github`
